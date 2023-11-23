@@ -3,11 +3,10 @@ import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import styles from "./Editor.module.css";
 import { getHints } from "../lib/getHints";
 
-const defaultValue = `
-const f = (a, b) => a + b;
-
-const result = f(2, 5);
-`;
+const defaultValue = `() => {
+	return
+	1
+}`;
 
 const registerInlayHintsProvider = () => {
   monaco.languages.registerInlayHintsProvider("javascript", {
