@@ -32,6 +32,9 @@ export const Editor: FC = () => {
       const editor = monaco.editor.create(monacoEl.current, {
         value: defaultValue,
         language: "javascript",
+        minimap: {
+          enabled: false,
+        },
       });
       registerInlayHintsProvider();
       return editor;
