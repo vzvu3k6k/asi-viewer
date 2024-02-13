@@ -43,5 +43,7 @@ export const Editor: FC = () => {
     return () => editor?.dispose();
   }, [editor]);
 
-  return <div className={styles.Editor} ref={monacoEl}></div>;
+  return (
+    <div data-test="monaco" className={styles.Editor} ref={monacoEl}></div>
+  );
 };

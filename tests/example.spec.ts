@@ -1,18 +1,21 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from "@playwright/test";
 
-test('has title', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
+test("basic", async ({ page }, testInfo) => {
+  await page.goto("/");
 
-  // Expect a title "to contain" a substring.
-  await expect(page).toHaveTitle(/Playwright/);
-});
+  if (testInfo.config.updateSnapshots === "all") {
+    // Wait enough for the editor to initialize
+    await new Promise((r) => setTimeout(r, 5000));
+  }
 
-test('get started link', async ({ page }) => {
-  await page.goto('https://playwright.dev/');
-
-  // Click the get started link.
-  await page.getByRole('link', { name: 'Get started' }).click();
-
-  // Expects page to have a heading with the name of Installation.
-  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+  await expect(async () => {
+    // Compare HTML instead of the screenshot
+    // to avoid rendering differences due to font variations across environments
+    expect(
+      await page.locator('[data-test="monaco"]').innerHTML()
+    ).toMatchSnapshot({
+      // Without name, basic-chromium-linux-1.html, basic-chromium-linux-2.html, ... will be created on each retry.
+      name: "basic.html",
+    });
+  }).toPass();
 });
